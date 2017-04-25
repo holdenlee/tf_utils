@@ -18,13 +18,13 @@ Make list of add-ons.
                 Saver(save_steps = save_steps, checkpoint_path = os.path.join(train_dir, 'model.ckpt')),
                 SummaryWriter(summary_steps = summary_steps, feed_dict = {}),
                 Logger(),
-                Eval(test_data, batch_size, ['accuracy'], eval_feed={}, eval_steps = eval_steps, name="test (real)")] + evals
+                Eval(test_data, batch_size, ['accuracy'], eval_feed={}, eval_steps = eval_steps, name="test (real)")]
 ```
 Define the model.
 ```
 def f():
 	x = tf.placeholder(tf.float32, shape=(None, 28, 28, 1))
-    y = tf.placeholder(tf.float32, shape=(None, 10))
+	y = tf.placeholder(tf.float32, shape=(None, 10))
 	# neural net here
 	# give dictionary of relevant quantities
 	model = {'loss': loss, 'inference': inference, 'accuracy': acc} # include any others you want to be able to access
@@ -39,10 +39,8 @@ trainer = Trainer(model, max_steps, train_data, addons, ph_dict, train_dir = tra
 ```
 Train.
 ```
-def main(_):
-    X_train, Y_train, X_test, Y_test = data_mnist()
-    trainer.init_and_train()
-    trainer.finish()
+trainer.init_and_train()
+trainer.finish()
 ```
 Example flags.
 ```
