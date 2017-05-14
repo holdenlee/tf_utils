@@ -173,9 +173,17 @@ def get_with_default(d, k, default):
 """
 Print functions
 """
-def printv(s, v, lim):
+def printv(s, v, lim, flush=True):
     if v >= lim:
-        print(s)
+        print(s, flush=flush)
+
+"""
+Conditionals. Warning: this is strict.
+"""
+def ifs(x, li):
+    for (v, k) in li:
+        if x==v:
+            return k
 
 """
 Other

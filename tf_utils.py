@@ -118,6 +118,11 @@ def make_batch_feeder(args, refresh_f=shuffle_refresh, num_examples = None):
         l = num_examples
     return BatchFeeder(args, l, (lambda bf, batch_size: batch_feeder_f(bf, batch_size, refresh_f)))
 
+def bfs_from_data(X_train,Y_train,X_test,Y_test):
+    train_data = make_batch_feeder({'x': X_train, 'y':Y_train})
+    test_data = make_batch_feeder({'x': X_test, 'y':Y_test})
+    return train_data, test_data
+
 """
 AddOn for Trainer
 """
@@ -183,7 +188,7 @@ class Saver(AddOn):
         if (valid_pos_int(self.save_steps) and step % self.save_steps == 0) or (step + 1) == trainer.max_step:
             checkpoint_path = os.path.join(trainer.train_dir, self.checkpoint_path)
             printv("Saving as %s" % checkpoint_path, trainer.verbosity, 1)
-            self.saver.save(trainer.sess, self.checkpoint_path, global_step=step)
+            self.saver.save(trainer.sess, checkpoint_path, global_step=step)
         return True
 
 class Train(AddOn):
